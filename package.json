@@ -1,12 +1,13 @@
 {
     "name": "fe-deploy-cli",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "A cli tool for web deploy.",
     "bin": {
         "deploy": "./bin/index.js"
     },
     "keywords": [
         "web",
+        "node-ssh",
         "deploy"
     ],
     "author": "dadaiwei",
@@ -14,6 +15,10 @@
     "engines": {
         "node": ">=10.0"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dadaiwei/fe-deploy-cli"
+      },
     "dependencies": {
         "archiver": "^3.1.1",
         "chalk": "^3.0.0",
