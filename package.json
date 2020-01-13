@@ -1,0 +1,27 @@
+{
+    "name": "fe-deploy-cli",
+    "version": "0.0.4",
+    "description": "A cli tool for web deploy.",
+    "bin": {
+        "deploy": "./bin/index.js"
+    },
+    "keywords": [
+        "web",
+        "deploy"
+    ],
+    "author": "dadaiwei",
+    "license": "ISC",
+    "engines": {
+        "node": ">=10.0"
+    },
+    "dependencies": {
+        "archiver": "^3.1.1",
+        "chalk": "^3.0.0",
+        "commander": "^4.1.0",
+        "download-git-repo": "^3.0.2",
+        "inquirer": "^7.0.3",
+        "node-ssh": "^7.0.0",
+        "ora": "^4.0.3",
+        "semver": "^7.1.1"
+    }
+}
