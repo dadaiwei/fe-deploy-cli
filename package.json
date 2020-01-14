@@ -1,6 +1,6 @@
 {
     "name": "fe-deploy-cli",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "A cli tool for web deploy.",
     "bin": {
         "deploy": "./bin/index.js"

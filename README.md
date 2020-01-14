@@ -17,7 +17,7 @@ https://github.com/dadaiwei/fe-deploy-cli/blob/master/README.md
 ```
 npm i fe-deploy-cli -g
 ```
-安装成功后查看版本（最新版本v0.0.7）
+安装成功后查看版本
 
 ![安装fe-deploy-cli](./imgs/安装deploy.png)
 
