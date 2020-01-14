@@ -4,6 +4,9 @@
 ## git地址：
 https://github.com/dadaiwei/fe-deploy-cli
 
+## 适用对象
+目前还在采用手工部署又期望快速实现轻量化部署的小团队或者个人项目，毕竟像阿里这种大公司都有完善的前端部署平台。
+
 ## 使用指南
 https://github.com/dadaiwei/fe-deploy-cli/blob/master/README.md
 
