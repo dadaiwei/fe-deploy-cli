@@ -14,6 +14,7 @@ https://github.com/dadaiwei/fe-deploy-cli/blob/master/README.md
 能通过ssh连上服务器即可
 
 ## 安装
+全局安装fe-deploy-cli
 ```
 npm i fe-deploy-cli -g
 ```
