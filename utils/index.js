@@ -12,6 +12,14 @@ const DEPLOY_SCHEMA = {
   webDir: ''
 };
 
+const PRIVATE_KEY_DEPLOY_SCHEMA = {
+  name: '',
+  script: "",
+  host: '',
+  port: 22,
+  webDir: ''
+};
+
 // 开始部署日志
 function startLog(...content) {
   console.log(chalk.magenta(...content));
@@ -46,10 +54,15 @@ function checkNodeVersion(wanted, id) {
 }
 
 // 检查配置是否符合特定schema
-function checkConfigScheme(configKey, configObj) {
-  const deploySchemaKeys = Object.keys(DEPLOY_SCHEMA);
+function checkConfigScheme(configKey, configObj, privateKey) {
+  let deploySchemaKeys = null;
   const configKeys = Object.keys(configObj);
   const neededKeys = [];
+  if (privateKey) {
+    deploySchemaKeys = Object.keys(PRIVATE_KEY_DEPLOY_SCHEMA);
+  } else {
+    deploySchemaKeys = Object.keys(DEPLOY_SCHEMA);
+  }
   for (let key of deploySchemaKeys) {
     if (!configKeys.includes(key)) {
       neededKeys.push(key);
@@ -59,7 +72,7 @@ function checkConfigScheme(configKey, configObj) {
     errorLog(`${configKey}缺少${neededKeys.join(',')}配置，请检查配置`);
     return false;
   }
-  for (let key of configKeys) {
+  for (let key of deploySchemaKeys) {
     if (configObj[key] === '') {
       neededKeys.push(key);
     }
@@ -80,7 +93,7 @@ function checkDeployConfig(deployConfigPath) {
     const configs = [];
     for (let key of keys) {
       if (config[key] instanceof Object) {
-        if (!checkConfigScheme(key, config[key])) {
+        if (!checkConfigScheme(key, config[key], privateKey)) {
           return false;
         }
         config[key].command = key;

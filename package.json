@@ -1,6 +1,6 @@
 {
     "name": "fe-deploy-cli",
-    "version": "0.0.9",
+    "version": "0.1.0",
     "description": "A cli tool for web deploy.",
     "bin": {
         "deploy": "./bin/index.js"
@@ -13,7 +13,7 @@
     "author": "dadaiwei",
     "license": "ISC",
     "engines": {
-        "node": ">=10.0"
+        "node": ">=9.0.0"
     },
     "repository": {
         "type": "git",
