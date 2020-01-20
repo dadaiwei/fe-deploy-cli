@@ -58,6 +58,8 @@ function checkConfigScheme(configKey, configObj, privateKey) {
   let deploySchemaKeys = null;
   const configKeys = Object.keys(configObj);
   const neededKeys = [];
+  const unConfigedKeys = [];
+  let configValid = true;
   if (privateKey) {
     deploySchemaKeys = Object.keys(PRIVATE_KEY_DEPLOY_SCHEMA);
   } else {
@@ -67,21 +69,19 @@ function checkConfigScheme(configKey, configObj, privateKey) {
     if (!configKeys.includes(key)) {
       neededKeys.push(key);
     }
-  }
-  if (neededKeys.length > 0) {
-    errorLog(`${configKey}缺少${neededKeys.join(',')}配置，请检查配置`);
-    return false;
-  }
-  for (let key of deploySchemaKeys) {
     if (configObj[key] === '') {
-      neededKeys.push(key);
+      unConfigedKeys.push(key);
     }
   }
   if (neededKeys.length > 0) {
-    errorLog(`${configKey}中的${neededKeys.join(', ')}暂未配置，请设置该配置项`);
-    return false;
+    errorLog(`${configKey}缺少${neededKeys.join(',')}配置，请检查配置`);
+    configValid = false;
   }
-  return true;
+  if (unConfigedKeys.length > 0) {
+    errorLog(`${configKey}中的${unConfigedKeys.join(', ')}暂未配置，请设置该配置项`);
+    configValid = false;
+  }
+  return configValid;
 }
 
 // 检查deploy配置是否合理
