@@ -7,6 +7,9 @@ https://github.com/dadaiwei/fe-deploy-cli
 ## npm地址：
 https://www.npmjs.com/package/fe-deploy-cli
 
+## 博客
+https://juejin.im/post/5e1bfbadf265da3e3077005e
+
 ## 适用对象
 目前还在采用手工部署又期望快速实现轻量化部署的小团队或者个人项目，毕竟像阿里这种大公司都有完善的前端部署平台。
 
