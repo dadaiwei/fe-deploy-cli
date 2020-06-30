@@ -29,6 +29,11 @@ const agrs = process.argv.slice(2);
 
 const firstArg = agrs[0];
 
+if (firstArg === 'start') {
+    deploy(1);
+    return;
+}
+
 // 非version选项且有配置文件时，进入部署流程
 if (!versionOptions.includes(firstArg) && fs.existsSync(deployConfigPath)) {
     deploy();
@@ -40,37 +45,77 @@ if (!firstArg) {
 }
 
 // 部署流程
-function deploy() {
+async function deploy(isStart) {
     // 检测部署配置是否合理
     const deployConfigs = checkDeployConfig(deployConfigPath);
     if (!deployConfigs) {
         process.exit(1);
     }
+    if (isStart) {
+        const choices = deployConfigs.map(xx => `${xx.name}--${xx.command}`);
+        const list = await inquirer.prompt([{
+            type: 'rawlist',
+            message: '请选择环境:',
+            name: 'environment',
+            choices: choices
+        }]);
+        const { environment } = list;
+        const index = choices.indexOf(environment);
+        const config = deployConfigs[index];
+        const { command, projectName, name } = config;
+        const answers = await inquirer.prompt([
+            {
+                type: 'confirm',
+                message: `${underlineLog(projectName)}项目是否部署到${underlineLog(name)}？`,
+                name: 'sure'
+            }
+        ]);
 
+        const { sure } = answers;
+        if (!sure) {
+            process.exit(1);
+            return;
+        }
+        const password = await inquirer.prompt([
+            {
+                type: 'password',
+                message: `请输入服务器密码？`,
+                name: 'pwd'
+            }
+        ]);
+        const deploy = require('../lib/deploy');
+        deploy(config, password.pwd);
+        return;
+    }
     // 注册部署命令
     deployConfigs.forEach(config => {
         const { command, projectName, name } = config;
         program
             .command(`${command}`)
             .description(`${underlineLog(projectName)}项目${underlineLog(name)}部署`)
-            .action(() => {
-                inquirer.prompt([
+            .action(async () => {
+                const answers = await inquirer.prompt([
                     {
                         type: 'confirm',
                         message: `${underlineLog(projectName)}项目是否部署到${underlineLog(name)}？`,
                         name: 'sure'
                     }
-                ]).then(answers => {
-                    const { sure } = answers;
-                    if (!sure) {
-                        process.exit(1);
-                    }
-                    if (sure) {
-                        const deploy = require('../lib/deploy');
-                        deploy(config);
-                    }
-                });
+                ]);
 
+                const { sure } = answers;
+                if (!sure) {
+                    process.exit(1);
+                    return;
+                }
+                const password = await inquirer.prompt([
+                    {
+                        type: 'password',
+                        message: `请输入服务器密码？`,
+                        name: 'pwd'
+                    }
+                ]);
+                const deploy = require('../lib/deploy');
+                deploy(config, password.pwd);
             });
     });
 }
