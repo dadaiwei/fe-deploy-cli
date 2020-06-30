@@ -10,7 +10,6 @@ const DEPLOY_SCHEMA = {
   host: '',
   port: 22,
   username: '',
-  password: '',
   webDir: ''
 };
 
